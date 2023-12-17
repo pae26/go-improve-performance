@@ -11,25 +11,25 @@ import (
 )
 
 func main() {
-	listener, e := net.Listen("tcp", "localhost:8888")
-	if e != nil {
-		panic(e)
+	listener, err := net.Listen("tcp", "localhost:8888")
+	if err != nil {
+		panic(err)
 	}
 	fmt.Println("Server is running at localhost:8888")
 	for {
-		conn, e := listener.Accept()
-		if e != nil {
-			panic(e)
+		conn, err := listener.Accept()
+		if err != nil {
+			panic(err)
 		}
 		go func() {
 			fmt.Printf("Accept %v", conn.RemoteAddr())
-			request, e := http.ReadRequest(bufio.NewReader(conn))
-			if e != nil {
-				panic(e)
+			request, err := http.ReadRequest(bufio.NewReader(conn))
+			if err != nil {
+				panic(err)
 			}
-			dump, e := httputil.DumpRequest(request, true)
-			if e != nil {
-				panic(e)
+			dump, err := httputil.DumpRequest(request, true)
+			if err != nil {
+				panic(err)
 			}
 			fmt.Println(string(dump))
 			response := http.Response{
